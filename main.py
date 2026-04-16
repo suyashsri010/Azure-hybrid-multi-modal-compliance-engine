@@ -55,7 +55,7 @@ def run_cli_simulation():
     # Think of it as the "intake form" for the compliance audit
     initial_inputs = {
         # The YouTube video to audit
-        "video_url": "https://youtu.be/xnuuMQfclYA?si=BkOsrUG40PMqqvz_",
+        "video_url": "https://youtu.be/1SIq_mvvs2s?si=rk_bC4W09aqH1yym",
         
         # Shortened video ID for easier tracking (first 8 chars of session ID)
         # Example: "vid_ce6c43bb"
