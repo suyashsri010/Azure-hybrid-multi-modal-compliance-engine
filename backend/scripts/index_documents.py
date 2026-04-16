@@ -9,7 +9,7 @@ load_dotenv(override=True)
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-# CHANGED: Standard OpenAI Embeddings & Azure Search
+# CHANGED: Gemini Embeddings & Azure Search
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import AzureSearch
 
@@ -29,17 +29,17 @@ def index_docs():
     current_dir = os.path.dirname(os.path.abspath(__file__))
     data_folder = os.path.join(current_dir, "../../backend/data")
     
-    # 3. Debug: Check Environment Variables (Updated for Standard OpenAI)
+    # 3. Debug: Check Environment Variables
     logger.info("=" * 60)
     logger.info("Environment Configuration Check:")
-    logger.info(f"OPENAI_API_KEY: {'[SET]' if os.getenv('OPENAI_API_KEY') else '[MISSING]'}")
+    logger.info(f"GOOGLE_API_KEY: {'[SET]' if os.getenv('GOOGLE_API_KEY') else '[MISSING]'}")
     logger.info(f"AZURE_SEARCH_ENDPOINT: {os.getenv('AZURE_SEARCH_ENDPOINT')}")
     logger.info(f"AZURE_SEARCH_INDEX_NAME: {os.getenv('AZURE_SEARCH_INDEX_NAME')}")
     logger.info("=" * 60)
     
     # 4. Validate Required Environment Variables
     required_vars = [
-        "OPENAI_API_KEY",
+        "GOOGLE_API_KEY",
         "AZURE_SEARCH_ENDPOINT",
         "AZURE_SEARCH_API_KEY",
         "AZURE_SEARCH_INDEX_NAME"
@@ -52,18 +52,17 @@ def index_docs():
         return
     
     # 5. Initialize Embedding Model (The "Translator")
-    # CHANGED: Now using standard OpenAI. It automatically pulls OPENAI_API_KEY from the environment.
+    # Replace the HuggingFace try/except block with this:
     try:
-        logger.info("Initializing Standard OpenAI Embeddings...")
+        logger.info("Initializing OpenAI Embeddings...")
         embeddings = OpenAIEmbeddings(
             model="text-embedding-3-small"
         )
         logger.info("✓ Embeddings model initialized successfully")
     except Exception as e:
         logger.error(f"Failed to initialize embeddings: {e}")
-        logger.error("Please verify your OpenAI API key.")
+        logger.error("Please verify your OPENAI_API_KEY.")
         return
-    
     # 6. Initialize Azure Search (The Database)
     try:
         logger.info("Initializing Azure AI Search vector store...")

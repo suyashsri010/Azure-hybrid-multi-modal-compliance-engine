@@ -82,15 +82,15 @@ def audit_content_node(state: VideoAuditState) -> Dict[str, Any]:
             "final_report": "Audit skipped because video processing failed (No Transcript)."
         }
 
-    # Initialize Clients
-    # How YOU will initialize the LLM and Embeddings
+    # --- FIX: Initialize Gemini Clients instead of OpenAI ---
     llm = ChatOpenAI(
-    model="gpt-4o", 
-    temperature=0
+        model="gpt-4o", 
+        temperature=0
     )
 
+    # text-embedding-3-large provides 3072-dimension vectors (more detail than small)
     embeddings = OpenAIEmbeddings(
-    model="text-embedding-3-small"
+        model="text-embedding-3-small"
     )
 
     vector_store = AzureSearch(
