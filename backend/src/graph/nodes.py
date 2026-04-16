@@ -153,9 +153,12 @@ def audit_content_node(state: VideoAuditState) -> Dict[str, Any]:
             content = re.search(r"```(?:json)?(.*?)```", content, re.DOTALL).group(1)
             
         audit_data = json.loads(content.strip())
-        
+        # DEBUG LOGS
+        logger.info(f"RAW CONTENT FROM LLM: {content}")
+        logger.info(f"PARSED AUDIT DATA: {audit_data}")
+        results = audit_data.get("compliance_results") or audit_data.get("compliance_result") or []
         return {
-            "compliance_results": audit_data.get("compliance_results", []),
+            "compliance_results": results,
             "final_status": audit_data.get("status", "FAIL"),
             "final_report": audit_data.get("final_report", "No report generated.")
         }

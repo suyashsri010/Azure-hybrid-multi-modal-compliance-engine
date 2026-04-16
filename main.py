@@ -55,7 +55,7 @@ def run_cli_simulation():
     # Think of it as the "intake form" for the compliance audit
     initial_inputs = {
         # The YouTube video to audit
-        "video_url": "https://youtu.be/dT7S75eYhcQ",
+        "video_url": "https://youtu.be/xnuuMQfclYA?si=BkOsrUG40PMqqvz_",
         
         # Shortened video ID for easier tracking (first 8 chars of session ID)
         # Example: "vid_ce6c43bb"
@@ -88,40 +88,35 @@ def run_cli_simulation():
         print("\n--- 2. WORKFLOW EXECUTION COMPLETE ---")
         
         # ========== STEP 4: OUTPUT RESULTS ==========
-        # Display a formatted compliance report
-        
         print("\n=== COMPLIANCE AUDIT REPORT ===")
         
-        # .get() safely retrieves values (returns None if key doesn't exist)
-        # Displays the video ID that was audited
+        # Get status and report - handle both potential naming conventions
+        status = final_state.get('final_status') or final_state.get('status', 'FAIL')
+        report = final_state.get('final_report') or final_state.get('report', 'No summary available.')
+
         print(f"Video ID:    {final_state.get('video_id')}")
-        
-        # Shows PASS or FAIL status
-        print(f"Status:      {final_state.get('final_status')}")
+        print(f"Status:      {status}")
         
         # ========== VIOLATIONS SECTION ==========
         print("\n[ VIOLATIONS DETECTED ]")
         
-        # Extract the list of compliance violations
-        # Default to empty list if no results
+        # KEY FIX: The Auditor returns 'compliance_results'
+        # We use .get() to avoid crashing and provide a default empty list
         results = final_state.get('compliance_results', [])
         
-        if results:
-            # Loop through each violation and display it
+        if results and len(results) > 0:
             for issue in results:
-                # Each issue is a dict with: severity, category, description
-                # Example output: "- [CRITICAL] Misleading Claims: Absolute guarantee detected"
-                print(f"- [{issue.get('severity')}] {issue.get('category')}: {issue.get('description')}")
+                # Use .get() on each field to be safe
+                severity = issue.get('severity', 'UNKNOWN')
+                category = issue.get('category', 'General')
+                description = issue.get('description', 'No details provided.')
+                print(f"- [{severity}] {category}: {description}")
         else:
-            # No violations found (clean video)
             print("No violations found.")
 
         # ========== SUMMARY SECTION ==========
         print("\n[ FINAL SUMMARY ]")
-        # Displays the AI-generated natural language summary
-        # Example: "Video contains 2 critical violations..."
-        print(final_state.get('final_report'))
-
+        print(report)
     except Exception as e:
         # ========== ERROR HANDLING ==========
         # If anything breaks, log the error

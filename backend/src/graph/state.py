@@ -28,7 +28,7 @@ class VideoAuditState(TypedDict):
 
     #analysis output
     #stores the list of all the violations found by AI
-    compliance_result : Annotated[List[ComplianceIssue],operator.add]
+    compliance_results : Annotated[List[ComplianceIssue],operator.add]
 
     #final deliverables:
     final_status : str # PASS | FAIL
