@@ -27,13 +27,15 @@ Manual video compliance is a major bottleneck for platforms and advertisers. Thi
 Ensure you have Python 3.10+ installed.
 
 ```bash
-git clone [https://github.com/suyashsri010/Azure-hybrid-multi-modal-compliance-engine.git](https://github.com/suyashsri010/Azure-hybrid-multi-modal-compliance-engine.git)
+git clone https://github.com/suyashsr1010/Azure-hybrid-multi-modal-compliance-engine.git
 cd Azure-hybrid-multi-modal-compliance-engine
 pip install -r requirements.txt
-2. Environment Variables
-Create a .env file in the root directory. You will need active API keys for OpenAI, Azure, and LangSmith. Note: Never commit your actual .env file to GitHub.
+```
 
-Code snippet
+### 2. Environment Variables
+Create a `.env` file in the root directory and add:
+
+```env
 OPENAI_API_KEY="sk-..."
 
 AZURE_SEARCH_ENDPOINT="..."
@@ -47,10 +49,16 @@ VI_LOCATION="..."
 LANGCHAIN_TRACING_V2=true
 LANGCHAIN_API_KEY="..."
 LANGCHAIN_PROJECT="compliance-engine"
-APPLICATIONINSIGHTS_CONNECTION_STRING="..."
-3. Run the Server
-Start the FastAPI development server locally:
 
-Bash
+APPLICATIONINSIGHTS_CONNECTION_STRING="..."
+```
+
+### 3. Run the Server
+
+```bash
 uvicorn main:app --reload
-Once the server is running, navigate to http://localhost:8000/docs in your browser. This will open the Swagger UI, where you can interactively test the compliance audit endpoints with your own video URLs.
+```
+
+Once the server is running, open:
+http://localhost:8000/docs
+This will open the Swagger UI, where you can interactively test the compliance audit endpoints with your own video URLs.
