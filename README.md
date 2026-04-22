@@ -1,6 +1,6 @@
 # Hybrid Multi-Modal Compliance Engine
 
-![Architecture Diagram](./Architecture_Multi-modal-compliance.png)
+![Architecture Diagram](./Architecture_multi_modal_compliance.png)
 
 A backend pipeline built to automate the QA review process for video content. 
 
